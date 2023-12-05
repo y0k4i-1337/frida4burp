@@ -87,12 +87,13 @@ $ ./getburpcert.sh
 # Use Frida to launch the app you're interested in with the scripts injected (starting with config.js). Which scripts to use is up to you, but for Android a good command to start with is:
 $ frida -U \
     -l ./config.js \
-    -l ./native-connect-hook.js \
+    -l ./android/android-antiroot.js \
     .l ./android/fridantiroot.js \
-    -l ./android/android-proxy-override.js \
-    -l ./android/android-system-certificate-injection.js \
+    -l ./native-connect-hook.js \
     -l ./android/android-certificate-unpinning.js \
     -l ./android/android-certificate-unpinning-fallback.js \
+    -l ./android/android-proxy-override.js \
+    -l ./android/android-system-certificate-injection.js \
     -f $PACKAGE_ID
 
 # You can, optionally, build all the scripts into a single one for convenience
