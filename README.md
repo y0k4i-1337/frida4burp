@@ -90,6 +90,7 @@ $ frida -U \
     -l ./android/android-antiroot.js \
     .l ./android/fridantiroot.js \
     -l ./native-connect-hook.js \
+    -l ./android/frida-multiple-unpinning.js \
     -l ./android/android-certificate-unpinning.js \
     -l ./android/android-certificate-unpinning-fallback.js \
     -l ./android/android-proxy-override.js \
