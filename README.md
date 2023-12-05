@@ -82,6 +82,8 @@ $ ./getburpcert.sh
 
 # Copy the content of ./certs/cacert.pem into the marked location at `config.js`
 
+# Update `config.js` according to your needs
+
 # Use Frida to launch the app you're interested in with the scripts injected (starting with config.js). Which scripts to use is up to you, but for Android a good command to start with is:
 $ frida -U \
     -l ./config.js \
