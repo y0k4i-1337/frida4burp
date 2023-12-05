@@ -78,6 +78,7 @@ update_external "${REMOTE_BASE_URL}" "${LOCAL_BASE_URL}" "${FILES[@]}"
 # Download  scripts from frida codeshare (android)
 CODESHARE_SCRIPTS=(
     "dzonerzy/fridantiroot"
+    "akabe1/frida-multiple-unpinning"
 )
 
 for script in "${CODESHARE_SCRIPTS[@]}"; do

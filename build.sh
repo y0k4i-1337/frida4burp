@@ -5,6 +5,7 @@ paste -sd'\n' ./config.js \
             ./android/android-antiroot.js \
             ./android/fridantiroot.js \
             ./native-connect-hook.js \
+	    ./android/frida-multiple-unpinning.js \
             ./android/android-certificate-unpinning.js \
             ./android/android-certificate-unpinning-fallback.js \
             ./android/android-proxy-override.js \
