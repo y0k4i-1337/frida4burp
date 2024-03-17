@@ -67,10 +67,12 @@ LOCAL_BASE_URL="."
 FILES=(
     "config.js"
     "native-connect-hook.js"
+    "native-tls-hook.js"
     "android/android-certificate-unpinning-fallback.js"
     "android/android-certificate-unpinning.js"
     "android/android-proxy-override.js"
     "android/android-system-certificate-injection.js"
+    "ios/ios-connect-hook.js"
 )
 
 update_external "${REMOTE_BASE_URL}" "${LOCAL_BASE_URL}" "${FILES[@]}"
