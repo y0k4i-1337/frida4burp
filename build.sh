@@ -13,3 +13,10 @@ paste -sd'\n' ./config.js \
     ./android/android-certificate-unpinning-fallback.js \
     >./build/android-frida-single-script.js
 echo "Build complete: ./build/android-frida-single-script.js"
+paste -sd'\n' ./config.js \
+    ./ios/ios-connect-hook.js \
+    ./ios/ios-disable-detection.js \
+    ./native-tls-hook.js \
+    ./native-connect-hook.js \
+    >./build/ios-frida-single-script.js
+echo "Build complete: ./build/ios-frida-single-script.js"
