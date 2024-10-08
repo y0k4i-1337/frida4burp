@@ -73,6 +73,7 @@ FILES=(
     "android/android-proxy-override.js"
     "android/android-system-certificate-injection.js"
     "ios/ios-connect-hook.js"
+    "ios/ios-disable-detection.js"
 )
 
 update_external "${REMOTE_BASE_URL}" "${LOCAL_BASE_URL}" "${FILES[@]}"
