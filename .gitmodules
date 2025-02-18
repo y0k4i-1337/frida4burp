@@ -1,0 +1,3 @@
+[submodule "misc/frida-flutterproxy"]
+	path = misc/frida-flutterproxy
+	url = https://github.com/hackcatml/frida-flutterproxy
