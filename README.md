@@ -74,6 +74,9 @@ and properly configured.
 # Clone this project
 $ git clone https://github.com/y0k4i-1337/frida4burp
 
+# Clone with submodules
+$ git clone --recurse-submodules https://github.com/y0k4i-1337/frida4burp
+
 # Access
 $ cd frida4burp
 
