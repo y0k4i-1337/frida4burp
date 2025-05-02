@@ -16,7 +16,7 @@ update_external() {
 
         if [ "${remote_hash}" != "${local_hash}" ]; then
             echo "Updating ${file}"
-            curl -s "${remote_base_url}/${file}" >"${local_base_url}/${file}"
+            curl -m 10 -s "${remote_base_url}/${file}" >"${local_base_url}/${file}"
         else
             echo "${file} is up to date"
         fi
@@ -88,3 +88,6 @@ for script in "${CODESHARE_SCRIPTS[@]}"; do
     echo "Downloading project @${script} from frida codeshare to ${LOCAL_BASE_URL}/android"
     parse_json_and_create_file "${script}" "${LOCAL_BASE_URL}/android"
 done
+
+# Download flutter proxy script
+curl -m 10 -s https://raw.githubusercontent.com/hackcatml/frida-flutterproxy/refs/heads/main/script.js > flutterproxy.js
