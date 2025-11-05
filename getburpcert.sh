@@ -17,3 +17,11 @@ curl -s --proxy "$BURP_PROXY" -o "$DST_DIR/cacert.der" http://burp/cert &&
 echo "Converting certificate to PEM format"
 openssl x509 -inform DER -in "$DST_DIR/cacert.der" -out "$DST_DIR/cacert.pem" &&
     echo "Certificate converted to $DST_DIR/cacert.pem"
+
+echo "Calculating hash from PEM certificate"
+HASH=$(openssl x509 -inform PEM -subject_hash_old -in "$DST_DIR/cacert.pem" | head -1) &&
+    echo "Certificate hash: $HASH"
+
+echo "Copying PEM certificate to $DST_DIR/$HASH.0"
+cp "$DST_DIR/cacert.pem" "$DST_DIR/$HASH.0" &&
+    echo "Certificate copied to $DST_DIR/$HASH.0"
