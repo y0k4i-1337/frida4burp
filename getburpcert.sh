@@ -8,7 +8,15 @@ fi
 echo "Using Burp proxy: $BURP_PROXY"
 
 DST_DIR="./certs"
-mkdir -p "$DST_DIR"
+
+# Verify if directory exists, if not create it
+if [ ! -d "$DST_DIR" ]; then
+    echo "Creating directory $DST_DIR for storing certificates"
+    mkdir -p "$DST_DIR"
+else
+    echo "Directory $DST_DIR already exists. Cleaning up existing certificates"
+    rm -f "$DST_DIR"/*
+fi
 
 echo "Downloading certificate from Burp proxy"
 curl -s --proxy "$BURP_PROXY" -o "$DST_DIR/cacert.der" http://burp/cert &&
