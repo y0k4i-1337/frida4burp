@@ -82,6 +82,7 @@ update_external "${REMOTE_BASE_URL}" "${LOCAL_BASE_URL}" "${FILES[@]}"
 CODESHARE_SCRIPTS=(
     "dzonerzy/fridantiroot"
     "akabe1/frida-multiple-unpinning"
+    "fdciabdul/frida-multiple-bypass"
 )
 
 for script in "${CODESHARE_SCRIPTS[@]}"; do

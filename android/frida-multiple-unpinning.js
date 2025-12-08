@@ -146,29 +146,50 @@ setTimeout(function() {
 		// TrustManagerImpl (Android > 7) //
 		////////////////////////////////////
 		try {
-			// Bypass TrustManagerImpl (Android > 7) {1}
+			// Bypass TrustManagerImpl.checkTrustedRecursive (Android > 7) {1}
 			var array_list = Java.use("java.util.ArrayList");
 			var TrustManagerImpl_Activity_1 = Java.use('com.android.org.conscrypt.TrustManagerImpl');
 			TrustManagerImpl_Activity_1.checkTrustedRecursive.implementation = function(certs, ocspData, tlsSctData, host, clientAuth, untrustedChain, trustAnchorChain, used) {
-				console.log('[+] Bypassing TrustManagerImpl (Android > 7) checkTrustedRecursive check for: '+ host);
+				console.log('[+] Bypassing TrustManagerImpl (Android > 7) checkTrustedRecursive {1} check: '+ host + ', ' +  untrustedChain);
 				return array_list.$new();
 			};
 		} catch (err) {
-			console.log('[-] TrustManagerImpl (Android > 7) checkTrustedRecursive check not found');
+			console.log('[-] TrustManagerImpl (Android > 7) checkTrustedRecursive {1} check not found');
 			//console.log(err);
-			errDict[err] = ['com.android.org.conscrypt.TrustManagerImpl', 'checkTrustedRecursive'];
-		}  
+		}
 		try {
-			// Bypass TrustManagerImpl (Android > 7) {2} (probably no more necessary)
+			// Bypass TrustManagerImpl.checkTrustedRecursive (Android > 7) {2}
+			var array_list = Java.use("java.util.ArrayList");
 			var TrustManagerImpl_Activity_2 = Java.use('com.android.org.conscrypt.TrustManagerImpl');
-			TrustManagerImpl_Activity_2.verifyChain.implementation = function(untrustedChain, trustAnchorChain, host, clientAuth, ocspData, tlsSctData) {
-				console.log('[+] Bypassing TrustManagerImpl (Android > 7) verifyChain check for: ' + host);
+			TrustManagerImpl_Activity_2.checkTrustedRecursive.implementation = function(certs, host, clientAuth, untrustedChain, trustAnchorChain, used) {
+				console.log('[+] Bypassing TrustManagerImpl (Android > 7) checkTrustedRecursive {2} check: '+ host + ' ' +  untrustedChain);
+				return array_list.$new();
+			};
+		} catch (err) {
+			console.log('[-] TrustManagerImpl (Android > 7) checkTrustedRecursive {2} check not found');
+			//console.log(err);
+		}
+		try {
+			// Bypass TrustManagerImpl.verifyChain (Android > 7) {1} (probably no more necessary)
+			var TrustManagerImpl_Activity_3 = Java.use('com.android.org.conscrypt.TrustManagerImpl');
+			TrustManagerImpl_Activity_3.verifyChain.implementation = function(untrustedChain, trustAnchorChain, host, clientAuth, ocspData, tlsSctData) {
+				console.log('[+] Bypassing TrustManagerImpl (Android > 7) verifyChain {1} check: ' + host + ', ' +  untrustedChain);
 				return untrustedChain;
 			};   
 		} catch (err) {
-			console.log('[-] TrustManagerImpl (Android > 7) verifyChain check not found');
+			console.log('[-] TrustManagerImpl (Android > 7) verifyChain {1} check not found');
 			//console.log(err);
-			errDict[err] = ['com.android.org.conscrypt.TrustManagerImpl', 'verifyChain'];  
+		}
+		try {
+			// Bypass TrustManagerImpl.verifyChain (Android > 7) {2} (probably no more necessary)
+			var TrustManagerImpl_Activity_4 = Java.use('com.android.org.conscrypt.TrustManagerImpl');
+			TrustManagerImpl_Activity_4.verifyChain.implementation = function(untrustedChain, trustAnchorChain, host, clientAuth) {
+				console.log('[+] Bypassing TrustManagerImpl (Android > 7) verifyChain {2} check: ' + host + ', ' +  untrustedChain);
+				return untrustedChain;
+			};   
+		} catch (err) {
+			console.log('[-] TrustManagerImpl (Android > 7) verifyChain {2} check not found');
+			//console.log(err);
 		}
 
   
