@@ -83,6 +83,9 @@ $ cd frida4burp
 # Open Burp and run the script to get your certificate in PEM format
 $ ./getburpcert.sh
 
+# Create a copy of config.js.sample named config.js
+$ cp config.js.sample config.js
+
 # Copy the content of ./certs/cacert.pem into the marked location at `config.js`
 
 # Update `config.js` according to your needs
@@ -120,7 +123,6 @@ For now, I have just added some custom scripts to make this process easier.
 ## :memo: License ##
 
 This project is under license from GNU Affero. For more details, see the [LICENSE](LICENSE) file.
-
 
 Made with :heart: by <a href="https://github.com/y0k4i-1337" target="_blank">y0k4i</a>
 
