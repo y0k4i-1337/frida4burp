@@ -1,3 +1,7 @@
 certs
 build
 .DS_Store
+config.js
+.tool-versions
+.vscode
+.idea

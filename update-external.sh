@@ -5,22 +5,31 @@
 # Parameters:
 #   $1: remote_base_url: The base URL to check for updates
 #   $2: local_base_url: The base URL to check for updates
-#   $3: files: The files to check for updates
+#   $3: remote_file: The file to check for updates
+#   $4: local_file: The file to check for updates
 update_external() {
     local remote_base_url="${1}"
     local local_base_url="${2}"
-    local files=("${@:3}")
-    for file in "${files[@]}"; do
-        local remote_hash=$(curl -s "${remote_base_url}/${file}" | shasum -a 256 | cut -d ' ' -f 1)
-        local local_hash=$(cat "${local_base_url}/${file}" | shasum -a 256 | cut -d ' ' -f 1)
+    local remote_file_name="${3}"
+    local local_file_name="${4}"
+    local remote_file_url="${remote_base_url}/${remote_file_name}"
+    local local_file_url="${local_base_url}/${local_file_name}"
 
-        if [ "${remote_hash}" != "${local_hash}" ]; then
-            echo "Updating ${file}"
-            curl -m 10 -s "${remote_base_url}/${file}" >"${local_base_url}/${file}"
-        else
-            echo "${file} is up to date"
-        fi
-    done
+    # test if local file exists
+    if [ ! -f "${local_file_url}" ]; then
+        echo "Downloading ${remote_file_name} for the first time"
+        curl -m 10 -s "${remote_file_url}" >"${local_file_url}"
+        return
+    fi
+    local remote_hash=$(curl -s "${remote_file_url}" | shasum -a 256 | cut -d ' ' -f 1)
+    local local_hash=$(cat "${local_file_url}" | shasum -a 256 | cut -d ' ' -f 1)
+
+    if [ "${remote_hash}" != "${local_hash}" ]; then
+        echo "Updating ${local_file_name}"
+        curl -m 10 -s "${remote_file_url}" >"${local_file_url}"
+    else
+        echo "${local_file_name} is up to date"
+    fi
 }
 
 # Function to parse JSON from projects on frida codeshare
@@ -65,18 +74,25 @@ REMOTE_BASE_URL="https://raw.githubusercontent.com/httptoolkit/frida-interceptio
 LOCAL_BASE_URL="."
 
 FILES=(
-    "config.js"
     "native-connect-hook.js"
     "native-tls-hook.js"
     "android/android-certificate-unpinning-fallback.js"
     "android/android-certificate-unpinning.js"
+    "android/android-disable-flutter-certificate-pinning.js"
+    "android/android-disable-root-detection.js"
     "android/android-proxy-override.js"
     "android/android-system-certificate-injection.js"
     "ios/ios-connect-hook.js"
     "ios/ios-disable-detection.js"
 )
 
-update_external "${REMOTE_BASE_URL}" "${LOCAL_BASE_URL}" "${FILES[@]}"
+# Check config.js and update if necessary
+update_external "${REMOTE_BASE_URL}" "${LOCAL_BASE_URL}" "config.js" "config.js.sample"
+
+# Check other files and update if necessary
+for file in "${FILES[@]}"; do
+    update_external "${REMOTE_BASE_URL}" "${LOCAL_BASE_URL}" "${file}" "${file}"
+done
 
 # Download  scripts from frida codeshare (android)
 CODESHARE_SCRIPTS=(
@@ -91,4 +107,4 @@ for script in "${CODESHARE_SCRIPTS[@]}"; do
 done
 
 # Download flutter proxy script
-curl -m 10 -s https://raw.githubusercontent.com/hackcatml/frida-flutterproxy/refs/heads/main/script.js > flutterproxy.js
+update_external "https://raw.githubusercontent.com/hackcatml/frida-flutterproxy/refs/heads/main" "${LOCAL_BASE_URL}" "script.js" "flutterproxy.js"
